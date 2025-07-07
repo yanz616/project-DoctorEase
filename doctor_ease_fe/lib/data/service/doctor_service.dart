@@ -13,6 +13,7 @@ class DoctorService {
       final List jsonList = json.decode(response.body);
       return jsonList.map((e) => Doctor.fromJson(e)).toList();
     } else {
+      print(response.body);
       throw Exception('Failed to load doctors');
     }
   }
