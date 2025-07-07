@@ -11,6 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthService authService;
 
+  //constructor untuk inisialisasi bloc
+  //menerima AuthService sebagai dependency injection
   LoginBloc({required this.authService}) : super(LoginInitial()) {
     on<LoginButtonPressed>((event, emit) async {
       //emit state LoginLoading sebelum memulai proses login

@@ -2,13 +2,18 @@ import 'dart:convert';
 
 import 'package:doctor_ease_fe/core/constants/variabel.dart';
 import 'package:doctor_ease_fe/core/utils/local_storage.dart';
-import 'package:doctor_ease_fe/data/models/user/auth_request.dart';
-import 'package:doctor_ease_fe/data/models/user/auth_response.dart';
+import 'package:doctor_ease_fe/data/models/user/request/auth_request.dart';
+import 'package:doctor_ease_fe/data/models/user/response/auth_response.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
   final String baseUrl = Variabel.baseUrl;
 
+  //request untuk login
+  // request berisi model LoginRequest
+  // login request berisi data yang diperlukan untuk login, misalnya email dan password
+  // response berisi model LoginResponse
+  // jika sukses, akan mengembalikan LoginResponse
   Future<LoginResponse> login(LoginRequest request) async {
     final response = await http.post(
       Uri.parse('$baseUrl/login'),
@@ -41,7 +46,7 @@ class AuthService {
     }
   }
 
-  Future<void> logout() async {
+  Future<String> logout() async {
     final token = await LocalStorage.getString();
     if (token == null) throw Exception('Token not found');
     final response = await http.post(
@@ -52,8 +57,9 @@ class AuthService {
       },
     );
     if (response.statusCode == 200) {
-      print(response.body);
+      final data = json.decode(response.body);
       await LocalStorage.removeString();
+      return LogoutResponse.fromJson(data).message;
     } else {
       throw Exception('Failed to logout');
     }

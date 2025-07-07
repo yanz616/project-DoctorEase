@@ -1,4 +1,4 @@
-import 'package:doctor_ease_fe/data/models/user/auth_request.dart';
+import 'package:doctor_ease_fe/data/models/user/request/auth_request.dart';
 
 abstract class RegisterEvent {}
 

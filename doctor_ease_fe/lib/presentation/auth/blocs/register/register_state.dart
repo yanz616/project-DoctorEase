@@ -1,4 +1,4 @@
-import 'package:doctor_ease_fe/data/models/user/auth_response.dart';
+import 'package:doctor_ease_fe/data/models/user/response/auth_response.dart';
 
 abstract class RegisterState {}
 
