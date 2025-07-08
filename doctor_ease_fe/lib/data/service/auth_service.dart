@@ -42,6 +42,7 @@ class AuthService {
       return RegisterResponse.fromJson(data);
     } else {
       print(response.body);
+      print('$baseUrl/register');
       throw Exception('Failed to register');
     }
   }
@@ -61,6 +62,7 @@ class AuthService {
       await LocalStorage.removeString();
       return LogoutResponse.fromJson(data).message;
     } else {
+      print(response.body);
       throw Exception('Failed to logout');
     }
   }

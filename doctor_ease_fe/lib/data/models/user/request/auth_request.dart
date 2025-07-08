@@ -4,13 +4,12 @@ class LoginRequest {
 
   LoginRequest({required this.email, required this.password});
 
+  factory LoginRequest.fromJson(Map<String, dynamic> json) {
+    return LoginRequest(email: json['email'], password: json['password']);
+  }
   Map<String, dynamic> toJson() {
     return {'email': email, 'password': password};
   }
-
-  // factory LoginRequest.fromJson(Map<String, dynamic> json) {
-  //   return LoginRequest(email: json['email'], password: json['password']);
-  // }
 }
 
 class RegisterRequest {
@@ -23,26 +22,26 @@ class RegisterRequest {
   RegisterRequest({
     required this.name,
     required this.email,
-    this.avatar,
+    this.avatar, //nullabe
     required this.password,
     required this.passwordConfirmation,
   });
 
-  // factory RegisterRequest.fromJson(Map<String, dynamic> json) {
-  //   return RegisterRequest(
-  //     name: json['name'],
-  //     email: json['email'],
-  //     avatar: json['avatar'],
-  //     password: json['password'],
-  //     passwordConfirmation: json['password_confirmation'],
-  //   );
-  // }
+  factory RegisterRequest.fromJson(Map<String, dynamic> json) {
+    return RegisterRequest(
+      name: json['name'],
+      email: json['email'],
+      avatar: json['avatar'],
+      password: json['password'],
+      passwordConfirmation: json['password_confirmation'],
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'email': email,
-      'avatar': avatar,
+      'avatar': avatar ?? "",
       'password': password,
       'password_confirmation': passwordConfirmation,
     };

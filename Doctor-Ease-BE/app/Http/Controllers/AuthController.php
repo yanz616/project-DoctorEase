@@ -28,10 +28,11 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
+            'message' => 'Registrasi berhasil',
             'token'=> $user->createToken('token')->plainTextToken,
             'user' => $user,
             // 'is_admin' => $user->is_admin,
-        ],200);
+        ],201);
     }
 
     public function login(Request $request){
