@@ -23,7 +23,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final response = await authService.login(event.request);
         //jika login berhasil, simpan token ke local storage
         await LocalStorage.setString(response.token);
-        print("Token saved: ${response.token}");
         //dan emit state LoginSuccess dengan response yang didapat
         emit(LoginSuccess(response: response));
       } catch (e) {

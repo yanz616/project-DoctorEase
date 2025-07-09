@@ -11,6 +11,8 @@ class MeBloc extends Bloc<MeEvent, MeState> {
       emit(MeLoadingState());
       try {
         final user = await profileService.me();
+        print('me bloc');
+        print(user);
         emit(MeLoadedState(user: user));
       } catch (e) {
         emit(MeErrorState(error: e.toString()));

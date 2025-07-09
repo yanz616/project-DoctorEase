@@ -22,10 +22,10 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
+      print(response.body);
       final data = json.decode(response.body);
       return LoginResponse.fromJson(data);
     } else {
-      print(response.body);
       throw Exception('Failed to login');
     }
   }
@@ -38,11 +38,11 @@ class AuthService {
     );
 
     if (response.statusCode == 201) {
+      print(response.body);
       final data = json.decode(response.body);
       return RegisterResponse.fromJson(data);
     } else {
-      print(response.body);
-      print('$baseUrl/register');
+      // print('$baseUrl/register');
       throw Exception('Failed to register');
     }
   }
