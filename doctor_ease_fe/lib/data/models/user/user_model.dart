@@ -24,9 +24,7 @@ class User {
       id: json['id'],
       name: json['name'],
       email: json['email'],
-      avatar: json['avatar'] == null
-          ? 'https://i.pinimg.com/1200x/29/86/1e/29861ea3420bde3ce1dcea7051564c04.jpg'
-          : json['avatar'],
+      avatar: json['avatar'],
       isAdmin: json['is_admin'] == false,
       token: json['token'],
       createdAt: json['created_at'] != null

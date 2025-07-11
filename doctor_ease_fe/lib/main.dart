@@ -6,6 +6,7 @@ import 'package:doctor_ease_fe/presentation/auth/blocs/register/register_bloc.da
 import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
 import 'package:doctor_ease_fe/presentation/home/doctor/bloc/doctor_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/update/update_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,6 +25,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => RegisterBloc(authService: AuthService())),
         BlocProvider(create: (_) => LoginBloc(authService: AuthService())),
         BlocProvider(create: (_) => MeBloc(profileService: ProfileService())),
+        BlocProvider(
+          create: (_) => UpdateBloc(profileService: ProfileService()),
+        ),
+        BlocProvider(create: (_) => LoginBloc(authService: AuthService())),
         BlocProvider(create: (_) => DoctorBloc(DoctorService())),
       ],
       child: MaterialApp(
