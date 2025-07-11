@@ -5,6 +5,7 @@ import 'package:doctor_ease_fe/presentation/auth/blocs/login/login_bloc.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/register/register_bloc.dart';
 import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
 import 'package:doctor_ease_fe/presentation/home/doctor/bloc/doctor_bloc.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/update/update_bloc.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => UpdateBloc(profileService: ProfileService()),
         ),
-        BlocProvider(create: (_) => LoginBloc(authService: AuthService())),
         BlocProvider(create: (_) => DoctorBloc(DoctorService())),
+        BlocProvider(create: (_) => LogoutBloc(authService: AuthService())),
       ],
       child: MaterialApp(
         title: 'Doctor Ease',

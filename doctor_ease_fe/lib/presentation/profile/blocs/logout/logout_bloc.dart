@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LogoutBloc extends Bloc<LogoutEvent, LogoutState> {
   final AuthService authService;
 
-  LogoutBloc(this.authService) : super(LogoutInitialState()) {
-    on<LogoutEvent>((event, emit) async {
+  LogoutBloc({required this.authService}) : super(LogoutInitialState()) {
+    on<LogoutSubmitted>((event, emit) async {
       emit(LogoutLoadingState());
       try {
         // Simulate a logout process

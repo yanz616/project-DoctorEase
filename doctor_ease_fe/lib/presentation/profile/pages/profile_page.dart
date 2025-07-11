@@ -1,3 +1,7 @@
+import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_event.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_state.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_event.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_state.dart';
@@ -5,7 +9,6 @@ import 'package:doctor_ease_fe/presentation/profile/pages/update_profile_page.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-//stateful digunakan untuk berkomunikasi dengan bloc
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -14,11 +17,33 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  //memuat data user
   @override
   void initState() {
     super.initState();
     context.read<MeBloc>().add(MeLoadEvent());
+  }
+
+  void _logout() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text("Logout"),
+        content: Text("You sure to logout?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("Batal"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<LogoutBloc>().add(LogoutSubmitted());
+            },
+            child: Text("Logout"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -26,59 +51,74 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(title: Text('Profile')),
       body: Padding(
-        padding: EdgeInsetsGeometry.all(16),
-        //bloc consumer digunakan untuk membangun ui berdasar state dari bloc
-        child: BlocConsumer<MeBloc, MeState>(
-          //builder digunakan untuk menampilkan ui berdasarkan state
-          builder: (context, state) {
-            // final user = context.read<MeBloc>();
-            //manampilkan loading spinner saat data sedang dimuat
-            if (state is MeLoadingState) {
-              return Center(child: CircularProgressIndicator());
-            } else if (state is MeLoadedState) {
-              //saat berhasil dimuat menampilkan data dibawah ini
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Name: ${state.user.name}"),
-                  Text("Email: ${state.user.email}"),
-                  // Add more user details as needed
-                  ElevatedButton(
-                    onPressed: () {
-                      //berpindah ke halaman edit
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => UpdateProfilePage(user: state.user),
-                        ),
-                      );
-                    },
-                    child: Text("Edit Profile"),
-                  ),
-                ],
-              );
-            } else {
-              return SizedBox.shrink();
-            }
-          },
-          //listener digunakan untuk menampilkan notifikasi saat terjadi perubahan di state
+        padding: const EdgeInsets.all(16),
+        child: BlocListener<LogoutBloc, LogoutState>(
           listener: (context, state) {
-            if (state is MeErrorState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.error),
-                  backgroundColor: Colors.red,
-                ),
+            if (state is LogoutLoadingState) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text("Sedang logout...")));
+            } else if (state is LogoutSuccessState) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('Logout Berhasil')));
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => LoginPage()),
+                (route) => false,
               );
-            } else if (state is MeLoadedState) {
+            } else if (state is LogoutErrorState) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Profile loaded successfully!"),
-                  backgroundColor: Colors.green,
-                ),
+                SnackBar(content: Text('Logout gagal: ${state.error}')),
               );
             }
           },
+          child: BlocBuilder<MeBloc, MeState>(
+            builder: (context, state) {
+              if (state is MeLoadingState) {
+                return Center(child: CircularProgressIndicator());
+              } else if (state is MeLoadedState) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Name: ${state.user.name}"),
+                    Text("Email: ${state.user.email}"),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    UpdateProfilePage(user: state.user),
+                              ),
+                            ).then((_) {
+                              context.read<MeBloc>().add(MeLoadEvent());
+                            });
+                          },
+                          child: Text("Edit Profile"),
+                        ),
+                        ElevatedButton(
+                          onPressed: _logout,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: Text("Logout"),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              } else if (state is MeErrorState) {
+                return Center(child: Text("Gagal memuat data: ${state.error}"));
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
         ),
       ),
     );

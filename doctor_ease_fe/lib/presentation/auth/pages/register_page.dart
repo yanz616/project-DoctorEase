@@ -21,6 +21,7 @@ class RegisterPage extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
+
         backgroundColor: error ? Colors.red : Colors.green,
       ),
     );
