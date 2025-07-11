@@ -29,11 +29,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => UpdateBloc(profileService: ProfileService()),
         ),
-        BlocProvider(create: (_) => DoctorBloc(DoctorService())),
+        BlocProvider(create: (_) => DoctorBloc(doctorService: DoctorService())),
         BlocProvider(create: (_) => LogoutBloc(authService: AuthService())),
       ],
       child: MaterialApp(
         title: 'Doctor Ease',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: Colors.green),
         home: LoginPage(),
       ),

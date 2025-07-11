@@ -1,3 +1,5 @@
+import 'package:doctor_ease_fe/data/models/doctor/doctor_model.dart';
+
 abstract class DoctorState {}
 
 class DoctorInitialState extends DoctorState {}
@@ -5,13 +7,13 @@ class DoctorInitialState extends DoctorState {}
 class DoctorLoadingState extends DoctorState {}
 
 class DoctorLoadedState extends DoctorState {
-  final List<dynamic> doctors;
+  final List<Doctor> doctors;
 
-  DoctorLoadedState(this.doctors);
+  DoctorLoadedState({required this.doctors});
 }
 
 class DoctorErrorState extends DoctorState {
-  final String message;
+  final String error;
 
-  DoctorErrorState(this.message);
+  DoctorErrorState({required this.error});
 }

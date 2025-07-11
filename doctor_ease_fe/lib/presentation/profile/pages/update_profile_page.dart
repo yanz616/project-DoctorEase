@@ -71,7 +71,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           if (state is UpdateLoadedState) {
             // Refresh profil
             context.read<MeBloc>().add(MeLoadEvent());
-
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Profile berhasil diperbarui")),
             );

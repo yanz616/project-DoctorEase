@@ -1,3 +1,4 @@
+import 'package:doctor_ease_fe/core/utils/local_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../core/constants/variabel.dart';
@@ -7,13 +8,20 @@ class DoctorService {
   final String baseUrl = Variabel.baseUrl;
 
   Future<List<Doctor>> getDoctors() async {
-    final response = await http.get(Uri.parse('$baseUrl/api/doctors'));
-
+    final token = await LocalStorage.getString();
+    if (token == null) throw Exception("Token Not Found");
+    final response = await http.get(
+      Uri.parse('$baseUrl/doctors'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
     if (response.statusCode == 200) {
-      final List doctorList = json.decode(response.body);
-      return doctorList.map((e) => Doctor.fromJson(e)).toList();
-    } else {
       print(response.body);
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Doctor.fromJson(json)).toList();
+    } else {
       throw Exception('Failed to load doctors');
     }
   }

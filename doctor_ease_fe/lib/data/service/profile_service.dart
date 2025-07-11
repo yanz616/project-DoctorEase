@@ -23,10 +23,7 @@ class ProfileService {
       },
     );
     if (response.statusCode == 200) {
-      print(response.body);
-
       final data = json.decode(response.body);
-      // print(data);
       return User.fromJson(data);
     } else {
       throw Exception('Failed to fetch user data');

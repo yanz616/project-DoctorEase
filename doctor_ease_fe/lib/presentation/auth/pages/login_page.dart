@@ -3,9 +3,10 @@ import 'package:doctor_ease_fe/presentation/auth/blocs/login/login_bloc.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/login/login_event.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/login/login_state.dart';
 import 'package:doctor_ease_fe/presentation/auth/pages/register_page.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
-import 'package:doctor_ease_fe/presentation/profile/pages/profile_page.dart';
+import 'package:doctor_ease_fe/presentation/home/doctor/pages/doctor_list_page.dart';
+// import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
+// import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
+// import 'package:doctor_ease_fe/presentation/profile/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -88,17 +89,21 @@ class LoginPage extends StatelessWidget {
               _showSnackBar(context, "Login berhasil!");
               // Navigasi ke halaman home atau halaman lain jika perlu
               // Navigator.pushReplacementNamed(context, '/home');
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (_) => MultiBlocProvider(
+              //       providers: [
+              //         BlocProvider.value(value: context.read<MeBloc>()),
+              //         BlocProvider.value(value: context.read<LogoutBloc>()),
+              //       ],
+              //       child: ProfilePage(),
+              //     ),
+              //   ),
+              // );
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => MultiBlocProvider(
-                    providers: [
-                      BlocProvider.value(value: context.read<MeBloc>()),
-                      BlocProvider.value(value: context.read<LogoutBloc>()),
-                    ],
-                    child: ProfilePage(),
-                  ),
-                ),
+                MaterialPageRoute(builder: (_) => DoctorListPage()),
               );
             }
           },
