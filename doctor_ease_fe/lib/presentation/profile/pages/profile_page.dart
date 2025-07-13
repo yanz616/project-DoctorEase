@@ -49,7 +49,11 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Profile')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text('Profile'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: BlocListener<LogoutBloc, LogoutState>(
@@ -95,9 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 builder: (_) =>
                                     UpdateProfilePage(user: state.user),
                               ),
-                            ).then((_) {
-                              context.read<MeBloc>().add(MeLoadEvent());
-                            });
+                            );
                           },
                           child: Text("Edit Profile"),
                         ),

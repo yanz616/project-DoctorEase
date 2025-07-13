@@ -6,7 +6,6 @@ import 'package:doctor_ease_fe/presentation/auth/pages/register_page.dart';
 import 'package:doctor_ease_fe/presentation/home/doctor/pages/doctor_list_page.dart';
 // import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
 // import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
-// import 'package:doctor_ease_fe/presentation/profile/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
