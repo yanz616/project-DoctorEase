@@ -47,7 +47,7 @@ class AuthService {
     }
   }
 
-  Future<String> logout() async {
+  Future<LogoutResponse> logout() async {
     final token = await LocalStorage.getString();
     if (token == null) throw Exception('Token not found');
     final response = await http.post(
@@ -60,7 +60,7 @@ class AuthService {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       await LocalStorage.removeString();
-      return LogoutResponse.fromJson(data).message;
+      return LogoutResponse.fromJson(data);
     } else {
       // print(response.body);
       throw Exception('Failed to logout');

@@ -18,7 +18,6 @@ class DoctorService {
       },
     );
     if (response.statusCode == 200) {
-      print(response.body);
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Doctor.fromJson(json)).toList();
     } else {
