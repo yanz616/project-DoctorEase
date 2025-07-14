@@ -56,7 +56,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Logout berhasil. Token dihapus.'
-        ]);
+        ],200);
     }
 
     // Update profile user yang sedang login
@@ -83,7 +83,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Profile berhasil diperbarui.',
             'data' => $user
-        ]);
+        ],200);
     }
 
 
@@ -93,3 +93,4 @@ class AuthController extends Controller
     }
 
 }
+   

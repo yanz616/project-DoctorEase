@@ -27,19 +27,19 @@ class AppointmentController extends Controller
 
         return response()->json([
             'message' => 'Appointment berhasil dibuat',
-            'data' => $appointment,
+            'data   ' => $appointment,
         ], 201);
     }
 
     // 2. Lihat semua appointment milik user yang sedang login
     public function index()
-    {
+    { 
         $appointments = Appointment::with(['doctor'])
             ->where('user_id', Auth::id())
             ->orderBy('scheduled_at', 'asc')
             ->get();
 
-        return response()->json($appointments);
+        return response()->json($appointments,200);
     }
 
     public function update(Request $request, $id)
@@ -54,6 +54,7 @@ class AppointmentController extends Controller
 
         // Validasi input
         $validated = $request->validate([
+            'doctor_id'=>'sometimes|exists:doctors,id',
             'scheduled_at' => 'sometimes|date',
             'purpose' => 'sometimes|string',
             // status di sini opsional, misalnya jika user boleh set ulang ke pending
@@ -66,7 +67,7 @@ class AppointmentController extends Controller
         return response()->json([
             'message' => 'Appointment updated successfully.',
             'data' => $appointment
-        ]);
+        ],200);
     }
 
 
@@ -82,6 +83,6 @@ class AppointmentController extends Controller
 
         $appointment->delete();
 
-        return response()->json(['message' => 'Appointment berhasil dibatalkan/hapus']);
+        return response()->json(['message' => 'Appointment berhasil dibatalkan/hapus'],200);
     }
 }

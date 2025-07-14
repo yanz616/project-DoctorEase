@@ -22,7 +22,7 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
+      // print(response.body);
       final data = json.decode(response.body);
       return LoginResponse.fromJson(data);
     } else {
@@ -38,7 +38,7 @@ class AuthService {
     );
 
     if (response.statusCode == 201) {
-      print(response.body);
+      // print(response.body);
       final data = json.decode(response.body);
       return RegisterResponse.fromJson(data);
     } else {
@@ -62,7 +62,7 @@ class AuthService {
       await LocalStorage.removeString();
       return LogoutResponse.fromJson(data).message;
     } else {
-      print(response.body);
+      // print(response.body);
       throw Exception('Failed to logout');
     }
   }
