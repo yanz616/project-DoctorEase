@@ -16,20 +16,21 @@ class LoadedAppointments extends AppointmentState {
   LoadedAppointments(this.appointment);
 }
 
-class SuccesAppointment extends AppointmentState {
+//succes add or update
+class SuccessAppointment extends AppointmentState {
   final AppointmentResponse response;
 
-  SuccesAppointment(this.response);
+  SuccessAppointment(this.response);
 }
 
-class SuccesDeleteAppointment extends AppointmentState {
+//succes delete
+class SuccessDeleteAppointment extends AppointmentState {
   final CancelAppointmentResponse response;
 
-  SuccesDeleteAppointment(this.response);
+  SuccessDeleteAppointment(this.response);
 }
 
-// class Succes
-
+//kondisi eror
 class FailureAppointment extends AppointmentState {
   final String error;
 

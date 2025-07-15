@@ -6,10 +6,10 @@ abstract class AppointmentEvent {}
 class LoadAppointments extends AppointmentEvent {}
 
 //crate appoinment
-class CreateAppoinments extends AppointmentEvent {
+class CreateAppointments extends AppointmentEvent {
   final AppointmentRequest request;
 
-  CreateAppoinments({required this.request});
+  CreateAppointments({required this.request});
 }
 
 //update Appointment

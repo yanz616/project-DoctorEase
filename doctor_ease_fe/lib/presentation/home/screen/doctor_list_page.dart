@@ -1,6 +1,7 @@
-import 'package:doctor_ease_fe/presentation/home/doctor/bloc/doctor_bloc.dart';
-import 'package:doctor_ease_fe/presentation/home/doctor/bloc/doctor_event.dart';
-import 'package:doctor_ease_fe/presentation/home/doctor/bloc/doctor_state.dart';
+import 'package:doctor_ease_fe/presentation/home/blocs/doctor/doctor_bloc.dart';
+import 'package:doctor_ease_fe/presentation/home/blocs/doctor/doctor_event.dart';
+import 'package:doctor_ease_fe/presentation/home/blocs/doctor/doctor_state.dart';
+import 'package:doctor_ease_fe/presentation/home/screen/detail_doctor.dart';
 import 'package:doctor_ease_fe/presentation/profile/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,6 @@ class DoctorListPage extends StatefulWidget {
 class _DoctorListPageState extends State<DoctorListPage> {
   @override
   void initState() {
-    //
     super.initState();
     context.read<DoctorBloc>().add(LoadDoctorsEvent());
   }
@@ -25,14 +25,14 @@ class _DoctorListPageState extends State<DoctorListPage> {
     return Scaffold(
       appBar: AppBar(title: Text('Doctor List')),
       body: Padding(
-        padding: EdgeInsetsGeometry.all(16),
+        padding: const EdgeInsets.all(16),
         child: BlocBuilder<DoctorBloc, DoctorState>(
           builder: (context, state) {
             if (state is DoctorLoadingState) {
-              return CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             } else if (state is DoctorLoadedState) {
               if (state.doctors.isEmpty) {
-                return Text('Doctor Kosong');
+                return const Center(child: Text('Tidak ada dokter tersedia.'));
               } else {
                 return Column(
                   children: [
@@ -41,11 +41,11 @@ class _DoctorListPageState extends State<DoctorListPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProfilePage(),
+                            builder: (context) => const ProfilePage(),
                           ),
                         );
                       },
-                      child: Text('profile'),
+                      child: const Text('Profile'),
                     ),
                     Expanded(
                       child: ListView.builder(
@@ -55,6 +55,17 @@ class _DoctorListPageState extends State<DoctorListPage> {
                           return ListTile(
                             title: Text(doctor.name),
                             subtitle: Text(doctor.specialization),
+                            trailing: const Icon(Icons.arrow_forward_ios),
+                            onTap: () {
+                              // 👇 Navigasi ke halaman detail doctor
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      DoctorDetailPage(doctor: doctor),
+                                ),
+                              );
+                            },
                           );
                         },
                       ),
@@ -63,9 +74,9 @@ class _DoctorListPageState extends State<DoctorListPage> {
                 );
               }
             } else if (state is DoctorErrorState) {
-              return Text('Error: ${state.error}');
+              return Center(child: Text('Terjadi kesalahan: ${state.error}'));
             }
-            return Container(); // initial empty state
+            return const SizedBox.shrink(); // initial or unknown state
           },
         ),
       ),

@@ -1,10 +1,12 @@
+import 'package:doctor_ease_fe/data/service/appoinment_service.dart';
 import 'package:doctor_ease_fe/data/service/auth_service.dart';
 import 'package:doctor_ease_fe/data/service/doctor_service.dart';
 import 'package:doctor_ease_fe/data/service/profile_service.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/login/login_bloc.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/register/register_bloc.dart';
 import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
-import 'package:doctor_ease_fe/presentation/home/doctor/bloc/doctor_bloc.dart';
+import 'package:doctor_ease_fe/presentation/home/blocs/appointment/appointment_bloc.dart';
+import 'package:doctor_ease_fe/presentation/home/blocs/doctor/doctor_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/update/update_bloc.dart';
@@ -30,6 +32,9 @@ class MyApp extends StatelessWidget {
           create: (_) => UpdateBloc(profileService: ProfileService()),
         ),
         BlocProvider(create: (_) => DoctorBloc(doctorService: DoctorService())),
+        BlocProvider(
+          create: (_) => AppointmentBloc(service: AppointmentService()),
+        ),
         BlocProvider(create: (_) => LogoutBloc(authService: AuthService())),
       ],
       child: MaterialApp(
