@@ -27,7 +27,7 @@ class AppointmentController extends Controller
 
         return response()->json([
             'message' => 'Appointment berhasil dibuat',
-            'data   ' => $appointment,
+            'data' => $appointment,
         ], 201);
     }
 

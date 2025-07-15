@@ -27,7 +27,7 @@ class CancelAppointmentResponse {
     return CancelAppointmentResponse(message: json['message']);
   }
 
-  Map<String, dynamic> toJson() {
-    return {'message': message};
-  }
+  // Map<String, dynamic> toJson() {
+  //   return {'message': message};
+  // }
 }

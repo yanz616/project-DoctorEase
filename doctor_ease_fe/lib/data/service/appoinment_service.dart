@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:doctor_ease_fe/core/constants/variabel.dart';
 import 'package:doctor_ease_fe/core/utils/local_storage.dart';
+import 'package:doctor_ease_fe/data/models/appointment/appointment_model.dart';
 import 'package:doctor_ease_fe/data/models/appointment/request/appointment_request.dart';
 import 'package:doctor_ease_fe/data/models/appointment/response/appointment_response.dart';
 import 'package:http/http.dart' as http;
 
-class AppoinmentService {
+class AppointmentService {
   final String baseUrl = Variabel.baseUrl;
 
   // Create appointment
@@ -52,6 +53,26 @@ class AppoinmentService {
       return AppointmentResponse.fromJson(data);
     } else {
       throw Exception('Failed to Update Appointment');
+    }
+  }
+
+  //get appointment
+  Future<List<AppointmentModel>> getAppointment() async {
+    final token = await LocalStorage.getString();
+    if (token == null) throw ("Token Not Found");
+    final response = await http.get(
+      Uri.parse("$baseUrl/appointments"),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      print(data);
+      return data.map((json) => AppointmentModel.fromJson(json)).toList();
+    } else {
+      throw Exception("Failed to Load Appintment");
     }
   }
 
