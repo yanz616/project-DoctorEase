@@ -56,7 +56,6 @@ class ProfileService {
       // print(data);
       return UpdateProfileResponse.fromJson(data);
     } else {
-      print(response.body);
       throw Exception('Failed to update profile');
     }
   }

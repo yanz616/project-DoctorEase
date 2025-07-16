@@ -13,7 +13,6 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
       try {
         final appointment = await service.getAppointment();
         emit(LoadedAppointments(appointment));
-        print("loaded : ${appointment.length} appointments");
       } catch (e) {
         emit(FailureAppointment(e.toString()));
       }

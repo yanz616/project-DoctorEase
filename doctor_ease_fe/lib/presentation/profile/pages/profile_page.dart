@@ -1,4 +1,5 @@
 import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
+import 'package:doctor_ease_fe/presentation/home/screen/appointment_page.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_event.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_state.dart';
@@ -77,49 +78,64 @@ class _ProfilePageState extends State<ProfilePage> {
               );
             }
           },
-          child: BlocBuilder<MeBloc, MeState>(
-            builder: (context, state) {
-              if (state is MeLoadingState) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is MeLoadedState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Name: ${state.user.name}"),
-                    Text("Email: ${state.user.email}"),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Column(
+            children: [
+              BlocBuilder<MeBloc, MeState>(
+                builder: (context, state) {
+                  if (state is MeLoadingState) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is MeLoadedState) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    UpdateProfilePage(user: state.user),
+                        Text("Name: ${state.user.name}"),
+                        Text("Email: ${state.user.email}"),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        UpdateProfilePage(user: state.user),
+                                  ),
+                                );
+                              },
+                              child: Text("Edit Profile"),
+                            ),
+                            ElevatedButton(
+                              onPressed: _logout,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
                               ),
-                            );
-                          },
-                          child: Text("Edit Profile"),
-                        ),
-                        ElevatedButton(
-                          onPressed: _logout,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                          ),
-                          child: Text("Logout"),
+                              child: Text("Logout"),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ],
-                );
-              } else if (state is MeErrorState) {
-                return Center(child: Text("Gagal memuat data: ${state.error}"));
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
+                    );
+                  } else if (state is MeErrorState) {
+                    return Center(
+                      child: Text("Gagal memuat data: ${state.error}"),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppointmentPage()),
+                  );
+                },
+                child: Text("Cek Appointment"),
+              ),
+            ],
           ),
         ),
       ),

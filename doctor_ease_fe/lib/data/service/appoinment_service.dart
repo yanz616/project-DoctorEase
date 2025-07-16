@@ -25,7 +25,6 @@ class AppointmentService {
     );
     if (response.statusCode == 201) {
       final data = json.decode(response.body);
-      print(data);
       return AppointmentResponse.fromJson(data);
     } else {
       throw Exception('Failed to Create Appointment');
@@ -49,7 +48,6 @@ class AppointmentService {
     );
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print(data);
       return AppointmentResponse.fromJson(data);
     } else {
       throw Exception('Failed to Update Appointment');
@@ -69,7 +67,6 @@ class AppointmentService {
     );
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      print(data);
       return data.map((json) => AppointmentModel.fromJson(json)).toList();
     } else {
       throw Exception("Failed to Load Appintment");
@@ -87,7 +84,6 @@ class AppointmentService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print(data);
       return CancelAppointmentResponse.fromJson(data);
     } else {
       throw Exception('Failed to Delete Appointment');
