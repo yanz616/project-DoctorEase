@@ -1,10 +1,8 @@
 import 'package:doctor_ease_fe/data/models/user/request/profile_request.dart';
 import 'package:doctor_ease_fe/data/models/user/user_model.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/update/update_bloc.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/update/update_event.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/update/update_state.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_event.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/profile_bloc.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/profile_event.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,16 +32,16 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       email: emailCtrl.text,
     );
 
-    context.read<UpdateBloc>().add(UpdateLoadEvent(request: request));
+    context.read<ProfileBloc>().add(UpdateProfileEvent(request: request));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Update Profile")),
-      body: BlocConsumer<UpdateBloc, UpdateState>(
+      body: BlocConsumer<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if (state is UpdateLoadingState) {
+          if (state is LoadingProfileState) {
             return CircularProgressIndicator();
           }
           return Padding(
@@ -68,14 +66,14 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           );
         },
         listener: (context, state) {
-          if (state is UpdateLoadedState) {
+          if (state is UpdatedProfile) {
             // Refresh profil
-            context.read<MeBloc>().add(MeLoadEvent());
+            context.read<ProfileBloc>().add(GetMeEvent());
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Profile berhasil diperbarui")),
             );
             Navigator.pop(context); // Kembali setelah sukses
-          } else if (state is UpdateErrorState) {
+          } else if (state is FailureProfileState) {
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text("Gagal: ${state.error}")));

@@ -12,9 +12,9 @@ class AuthService {
   //request untuk login
   // request berisi model LoginRequest
   // login request berisi data yang diperlukan untuk login, misalnya email dan password
-  // response berisi model LoginResponse
-  // jika sukses, akan mengembalikan LoginResponse
-  Future<LoginResponse> login(LoginRequest request) async {
+  // response berisi model AuthResponse
+  // jika sukses, akan mengembalikan AuthResponse
+  Future<AuthResponse> login(LoginRequest request) async {
     final response = await http.post(
       Uri.parse('$baseUrl/login'),
       headers: {'Content-Type': 'application/json'},
@@ -24,13 +24,13 @@ class AuthService {
     if (response.statusCode == 200) {
       // print(response.body);
       final data = json.decode(response.body);
-      return LoginResponse.fromJson(data);
+      return AuthResponse.fromJson(data);
     } else {
       throw Exception('Failed to login');
     }
   }
 
-  Future<RegisterResponse> register(RegisterRequest request) async {
+  Future<AuthResponse> register(RegisterRequest request) async {
     final response = await http.post(
       Uri.parse('$baseUrl/register'),
       headers: {'Content-Type': 'application/json'},
@@ -40,7 +40,7 @@ class AuthService {
     if (response.statusCode == 201) {
       // print(response.body);
       final data = json.decode(response.body);
-      return RegisterResponse.fromJson(data);
+      return AuthResponse.fromJson(data);
     } else {
       // print('$baseUrl/register');
       throw Exception('Failed to register');

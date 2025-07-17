@@ -1,7 +1,7 @@
 import 'package:doctor_ease_fe/data/models/user/request/auth_request.dart';
-import 'package:doctor_ease_fe/presentation/auth/blocs/register/register_bloc.dart';
-import 'package:doctor_ease_fe/presentation/auth/blocs/register/register_event.dart';
-import 'package:doctor_ease_fe/presentation/auth/blocs/register/register_state.dart';
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_bloc.dart';
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_event.dart';
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,19 +33,19 @@ class RegisterPage extends StatelessWidget {
       appBar: AppBar(title: Text('Register')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocConsumer<RegisterBloc, RegisterState>(
+        child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is RegisterFailure) {
+            if (state is AuthFailure) {
               _showSnackBar(context, state.error, error: true);
             }
-            if (state is RegisterSuccess) {
-              _showSnackBar(context, "Registrasi berhasil!");
+            if (state is AuthSuccessResponse) {
+              _showSnackBar(context, state.response.message);
               // Navigasi ke halaman login atau home jika perlu
               // Navigator.pushReplacementNamed(context, '/login');
             }
           },
           builder: (context, state) {
-            if (state is RegisterLoading) {
+            if (state is AuthLoading) {
               return Center(child: CircularProgressIndicator());
             }
             return Column(
@@ -100,8 +100,8 @@ class RegisterPage extends StatelessWidget {
                       passwordConfirmation:
                           _passwordConfirmationController.text,
                     );
-                    context.read<RegisterBloc>().add(
-                      RegisterButtonPressed(request: request),
+                    context.read<AuthBloc>().add(
+                      RegisterEvent(request: request),
                     );
                   },
                   child: Text('Register'),

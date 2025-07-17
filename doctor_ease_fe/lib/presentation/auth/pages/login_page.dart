@@ -1,11 +1,9 @@
 import 'package:doctor_ease_fe/data/models/user/request/auth_request.dart';
-import 'package:doctor_ease_fe/presentation/auth/blocs/login/login_bloc.dart';
-import 'package:doctor_ease_fe/presentation/auth/blocs/login/login_event.dart';
-import 'package:doctor_ease_fe/presentation/auth/blocs/login/login_state.dart';
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_bloc.dart';
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_event.dart';
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_state.dart';
 import 'package:doctor_ease_fe/presentation/auth/pages/register_page.dart';
 import 'package:doctor_ease_fe/presentation/home/screen/doctor_list_page.dart';
-// import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
-// import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -35,9 +33,9 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(title: Text('Login Page')),
       body: Padding(
         padding: EdgeInsetsGeometry.all(16),
-        child: BlocConsumer<LoginBloc, LoginState>(
+        child: BlocConsumer<AuthBloc, AuthState>(
           builder: (context, state) {
-            if (state is LoginLoading) {
+            if (state is AuthLoading) {
               return Center(child: CircularProgressIndicator());
             }
             return Column(
@@ -60,9 +58,7 @@ class LoginPage extends StatelessWidget {
                       email: _emailController.text,
                       password: _passwordController.text,
                     );
-                    context.read<LoginBloc>().add(
-                      LoginButtonPressed(request: request),
-                    );
+                    context.read<AuthBloc>().add(LoginEvent(request: request));
                   },
                   child: Text('Login'),
                 ),
@@ -81,11 +77,11 @@ class LoginPage extends StatelessWidget {
             );
           },
           listener: (context, state) {
-            if (state is LoginFailure) {
+            if (state is AuthFailure) {
               _showSnackBar(context, state.error, error: true);
             }
-            if (state is LoginSuccess) {
-              _showSnackBar(context, "Login berhasil!");
+            if (state is AuthSuccessResponse) {
+              _showSnackBar(context, state.response.message);
               // Navigasi ke halaman home atau halaman lain jika perlu
               // Navigator.pushReplacementNamed(context, '/home');
               // Navigator.push(

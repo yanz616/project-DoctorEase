@@ -1,11 +1,11 @@
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_bloc.dart';
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_event.dart';
+import 'package:doctor_ease_fe/presentation/auth/blocs/auth_state.dart';
 import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
 import 'package:doctor_ease_fe/presentation/home/screen/appointment_page.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_bloc.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_event.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/logout/logout_state.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_bloc.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_event.dart';
-import 'package:doctor_ease_fe/presentation/profile/blocs/me/me_state.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/profile_bloc.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/profile_event.dart';
+import 'package:doctor_ease_fe/presentation/profile/blocs/profile_state.dart';
 import 'package:doctor_ease_fe/presentation/profile/pages/update_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    context.read<MeBloc>().add(MeLoadEvent());
+    context.read<ProfileBloc>().add(GetMeEvent());
   }
 
   void _logout() {
@@ -38,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              context.read<LogoutBloc>().add(LogoutSubmitted());
+              context.read<AuthBloc>().add(LogoutEvent());
             },
             child: Text("Logout"),
           ),
@@ -57,22 +57,22 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: BlocListener<LogoutBloc, LogoutState>(
+        child: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is LogoutLoadingState) {
+            if (state is AuthLoading) {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text("Sedang logout...")));
-            } else if (state is LogoutSuccessState) {
+            } else if (state is LogoutSuccess) {
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(SnackBar(content: Text('Logout Berhasil')));
+              ).showSnackBar(SnackBar(content: Text(state.response.message)));
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => LoginPage()),
                 (route) => false,
               );
-            } else if (state is LogoutErrorState) {
+            } else if (state is AuthFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Logout gagal: ${state.error}')),
               );
@@ -80,11 +80,11 @@ class _ProfilePageState extends State<ProfilePage> {
           },
           child: Column(
             children: [
-              BlocBuilder<MeBloc, MeState>(
+              BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
-                  if (state is MeLoadingState) {
+                  if (state is LoadingProfileState) {
                     return Center(child: CircularProgressIndicator());
-                  } else if (state is MeLoadedState) {
+                  } else if (state is GetMeLoaded) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -117,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                     );
-                  } else if (state is MeErrorState) {
+                  } else if (state is FailureProfileState) {
                     return Center(
                       child: Text("Gagal memuat data: ${state.error}"),
                     );
