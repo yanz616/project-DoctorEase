@@ -3,6 +3,7 @@ class User {
   final String name;
   final String email;
   final String? avatar;
+  final String? password;
   final bool isAdmin;
   final String? token;
   final DateTime? createdAt;
@@ -13,6 +14,7 @@ class User {
     required this.name,
     required this.email,
     this.avatar,
+    this.password,
     required this.isAdmin,
     this.token,
     this.createdAt,
@@ -25,6 +27,7 @@ class User {
       name: json['name'],
       email: json['email'],
       avatar: json['avatar'],
+      password: json['password'],
       isAdmin: json['is_admin'] == false,
       token: json['token'],
       createdAt: json['created_at'] != null
@@ -42,6 +45,7 @@ class User {
       'name': name,
       'email': email,
       'avatar': avatar,
+      'password': password,
       'is_admin': isAdmin,
       'token': token,
       'created_at': createdAt?.toIso8601String(),
