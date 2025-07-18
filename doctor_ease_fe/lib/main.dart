@@ -3,10 +3,10 @@ import 'package:doctor_ease_fe/data/service/auth_service.dart';
 import 'package:doctor_ease_fe/data/service/doctor_service.dart';
 import 'package:doctor_ease_fe/data/service/profile_service.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_bloc.dart';
-import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
 import 'package:doctor_ease_fe/presentation/home/blocs/appointment/appointment_bloc.dart';
 import 'package:doctor_ease_fe/presentation/home/blocs/doctor/doctor_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/profile_bloc.dart';
+import 'package:doctor_ease_fe/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,8 +33,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Doctor Ease',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.green),
-        home: LoginPage(),
+        home: SplashPage(),
       ),
     );
   }
