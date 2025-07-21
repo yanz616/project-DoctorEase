@@ -1,7 +1,7 @@
 import 'package:doctor_ease_fe/presentation/home/blocs/appointment/appointment_bloc.dart';
 import 'package:doctor_ease_fe/presentation/home/blocs/appointment/appointment_event.dart';
 import 'package:doctor_ease_fe/presentation/home/blocs/appointment/appointment_state.dart';
-import 'package:doctor_ease_fe/presentation/home/screen/edit_appointment.dart';
+import 'package:doctor_ease_fe/presentation/home/pages/edit_appointment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

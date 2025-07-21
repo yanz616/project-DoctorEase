@@ -1,8 +1,9 @@
 import 'package:doctor_ease_fe/core/constants/colors.dart';
 import 'package:doctor_ease_fe/core/constants/font.dart';
-import 'package:doctor_ease_fe/core/constants/text_color.dart';
 import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
+import 'package:doctor_ease_fe/widgets/my_text.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -31,27 +32,32 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.cream,
-      body: Stack(
+      backgroundColor: AppColors.darkCyan,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.favorite_border_sharp,
-                  size: 50,
-                  color: AppColors.lightBlue,
+          Image(image: AssetImage("assets/icons/Vector.png")),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MontSerratText(
+                text: "Doctor",
+                styles: StyleText(
+                  size: 14,
+                  weight: AppFontWeights.semiBold,
+                  color: AppColors.white,
                 ),
-                Text(
-                  'Doctor Ease',
-                  style: TextColor.charcoalBlue.copyWith(
-                    fontWeight: AppFontWeights.bold,
-                    fontSize: 50,
-                  ),
+              ),
+              Gap(2),
+              MontSerratText(
+                text: "Ease",
+                styles: StyleText(
+                  size: 16,
+                  weight: AppFontWeights.extraBold,
+                  color: AppColors.orange,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

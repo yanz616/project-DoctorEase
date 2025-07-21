@@ -1,7 +1,7 @@
 import 'package:doctor_ease_fe/presentation/home/blocs/doctor/doctor_bloc.dart';
 import 'package:doctor_ease_fe/presentation/home/blocs/doctor/doctor_event.dart';
 import 'package:doctor_ease_fe/presentation/home/blocs/doctor/doctor_state.dart';
-import 'package:doctor_ease_fe/presentation/home/screen/detail_doctor.dart';
+import 'package:doctor_ease_fe/presentation/home/pages/detail_doctor.dart';
 import 'package:doctor_ease_fe/presentation/profile/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

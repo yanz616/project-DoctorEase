@@ -2,7 +2,7 @@ import 'package:doctor_ease_fe/presentation/auth/blocs/auth_bloc.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_event.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_state.dart';
 import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
-import 'package:doctor_ease_fe/presentation/home/screen/appointment_page.dart';
+import 'package:doctor_ease_fe/presentation/home/pages/appointment_page.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/profile_bloc.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/profile_event.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/profile_state.dart';

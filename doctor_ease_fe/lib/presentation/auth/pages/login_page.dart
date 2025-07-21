@@ -1,9 +1,14 @@
+import 'package:doctor_ease_fe/core/constants/colors.dart';
+import 'package:doctor_ease_fe/core/constants/font.dart';
 import 'package:doctor_ease_fe/data/models/user/request/auth_request.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_bloc.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_event.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_state.dart';
 import 'package:doctor_ease_fe/presentation/auth/pages/register_page.dart';
-import 'package:doctor_ease_fe/presentation/home/screen/doctor_list_page.dart';
+import 'package:doctor_ease_fe/presentation/home/pages/doctor_list_page.dart';
+import 'package:doctor_ease_fe/widgets/my_button.dart';
+import 'package:doctor_ease_fe/widgets/my_form_field.dart';
+import 'package:doctor_ease_fe/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -18,6 +23,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  bool _isPasswordObscured = true;
+  String? _passwordError;
 
   @override
   void initState() {
@@ -49,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login Page')),
       body: Padding(
         padding: EdgeInsetsGeometry.all(16),
         child: BlocConsumer<AuthBloc, AuthState>(
@@ -58,39 +64,149 @@ class _LoginPageState extends State<LoginPage> {
               return Center(child: CircularProgressIndicator());
             }
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextField(
+                Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 110),
+                      child: PoppinText(
+                        text: "Hello!",
+                        styles: StyleText(
+                          size: 22,
+                          weight: AppFontWeights.bold,
+                          color: AppColors.black,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Image(image: AssetImage("assets/icons/login.png")),
+                    ),
+                  ],
+                ),
+                Gap(4),
+                Center(
+                  child: PoppinText(
+                    text: "We're Glad to Have You Back",
+                    styles: StyleText(
+                      size: 12,
+                      weight: AppFontWeights.medium,
+                      color: AppColors.bluishGrey,
+                    ),
+                  ),
+                ),
+                Gap(76),
+                PoppinText(
+                  text: "Email Addres",
+                  styles: StyleText(
+                    size: 16,
+                    weight: AppFontWeights.medium,
+                    color: AppColors.darkTeal,
+                  ),
+                ),
+                Gap(10),
+                MyFormField(
                   controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
+                  hintText: "Email Addres",
+                  prefixIcon: Icon(Icons.email_outlined),
+                  color: AppColors.white,
+                  hintStyle: StyleText(
+                    size: 12,
+                    weight: AppFontWeights.regular,
+                    color: AppColors.mediumGrey,
+                  ),
                 ),
-                TextField(
+                Gap(26),
+                PoppinText(
+                  text: "Password",
+                  styles: StyleText(
+                    size: 16,
+                    weight: AppFontWeights.medium,
+                    color: AppColors.darkTeal,
+                  ),
+                ),
+                Gap(10),
+                MyFormField(
                   controller: _passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
+                  obscure: _isPasswordObscured,
+                  hintText: "Password",
+                  prefixIcon: Icon(Icons.key_outlined),
+                  color: AppColors.white,
+                  hintStyle: StyleText(
+                    size: 12,
+                    weight: AppFontWeights.regular,
+                    color: AppColors.mediumGrey,
+                  ),
+                  errorText: _passwordError,
+                  showToggleIcon: true,
+                  onToggle: () {
+                    setState(() {
+                      _isPasswordObscured = !_isPasswordObscured;
+                    });
+                  },
                 ),
+
                 // SizedBox(height: 20),
-                Gap(20),
+                Gap(44),
                 // Tombol untuk login
-                ElevatedButton(
+                MyButton(
                   onPressed: () {
                     final request = LoginRequest(
                       email: _emailController.text,
                       password: _passwordController.text,
                     );
+                    if (_passwordController.text.length < 6) {
+                      setState(() {
+                        _passwordError = "Password is incorrect!";
+                      });
+                      return;
+                    }
+
+                    setState(() {
+                      _passwordError = null; // Reset error
+                    });
                     context.read<AuthBloc>().add(LoginEvent(request: request));
                   },
-                  child: Text('Login'),
+                  borderCircular: 28,
+                  vertical: 16,
+                  text: "Login",
+                  styleText: StyleText(
+                    size: 16,
+                    weight: AppFontWeights.semiBold,
+                    color: AppColors.white,
+                  ),
                 ),
-                Gap(20),
-                TextButton(
-                  onPressed: () {
-                    // Navigasi ke halaman register
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => RegisterPage()),
-                    );
-                  },
-                  child: Text('Belum punya akun? Daftar di sini'),
+                Gap(26),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PoppinText(
+                      text: "Don't Have Account?",
+                      styles: StyleText(
+                        size: 14,
+                        weight: AppFontWeights.regular,
+                        color: AppColors.mediumGrey,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        // Navigasi ke halaman register
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => RegisterPage()),
+                        );
+                      },
+                      child: PoppinText(
+                        text: "Sign Up",
+                        styles: StyleText(
+                          size: 14,
+                          weight: AppFontWeights.extraBold,
+                          color: AppColors.darkCyan,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             );
@@ -101,20 +217,6 @@ class _LoginPageState extends State<LoginPage> {
             }
             if (state is AuthSuccessResponse) {
               _showSnackBar(context, state.response.message);
-              // Navigasi ke halaman home atau halaman lain jika perlu
-              // Navigator.pushReplacementNamed(context, '/home');
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (_) => MultiBlocProvider(
-              //       providers: [
-              //         BlocProvider.value(value: context.read<MeBloc>()),
-              //         BlocProvider.value(value: context.read<LogoutBloc>()),
-              //       ],
-              //       child: ProfilePage(),
-              //     ),
-              //   ),
-              // );
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => DoctorListPage()),
