@@ -32,7 +32,27 @@ class _DoctorListPageState extends State<DoctorListPage> {
               return const Center(child: CircularProgressIndicator());
             } else if (state is DoctorLoadedState) {
               if (state.doctors.isEmpty) {
-                return const Center(child: Text('Tidak ada dokter tersedia.'));
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProfilePage(),
+                          ),
+                        );
+                      },
+                      child: const Text('Profile'),
+                    ),
+                    Spacer(),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Text('Tidak ada dokter tersedia.'),
+                    ),
+                  ],
+                );
               } else {
                 return Column(
                   children: [
