@@ -1,9 +1,16 @@
+import 'package:doctor_ease_fe/core/constants/colors.dart';
+import 'package:doctor_ease_fe/core/constants/font.dart';
 import 'package:doctor_ease_fe/data/models/user/request/auth_request.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_bloc.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_event.dart';
 import 'package:doctor_ease_fe/presentation/auth/blocs/auth_state.dart';
+import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
+import 'package:doctor_ease_fe/widgets/my_button.dart';
+import 'package:doctor_ease_fe/widgets/my_form_field.dart';
+import 'package:doctor_ease_fe/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -20,6 +27,8 @@ class _RegisterPageState extends State<RegisterPage> {
   late TextEditingController _passwordController;
 
   late TextEditingController _passwordConfirmationController;
+  bool _isPasswordObscured = true;
+  String? _passwordError;
 
   @override
   void initState() {
@@ -56,7 +65,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<AuthBloc, AuthState>(
@@ -74,65 +82,208 @@ class _RegisterPageState extends State<RegisterPage> {
             if (state is AuthLoading) {
               return Center(child: CircularProgressIndicator());
             }
-            return Column(
-              children: [
-                TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(labelText: 'Name'),
-                ),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
-                ),
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                ),
-                TextField(
-                  controller: _passwordConfirmationController,
-                  decoration: InputDecoration(labelText: 'Confirm Password'),
-                  obscureText: true,
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    // Validasi sederhana
-                    if (_nameController.text.isEmpty ||
-                        _emailController.text.isEmpty ||
-                        _passwordController.text.isEmpty ||
-                        _passwordConfirmationController.text.isEmpty) {
-                      _showSnackBar(
-                        context,
-                        "Semua field harus diisi",
-                        error: true,
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Gap(72),
+                  Center(
+                    child: Image(
+                      image: AssetImage('assets/icons/register.png'),
+                      width: 200,
+                      height: 100,
+                    ),
+                  ),
+                  Gap(58),
+                  PoppinText(
+                    text: "Name",
+                    styles: StyleText(
+                      size: 16,
+                      weight: AppFontWeights.medium,
+                      color: AppColors.darkTeal,
+                    ),
+                  ),
+                  Gap(10),
+                  MyFormField(
+                    controller: _nameController,
+                    hintText: "Enter Your Name",
+                    prefixIcon: Icon(
+                      Icons.person_2_outlined,
+                      color: AppColors.darkTeal,
+                    ),
+                    color: AppColors.white,
+                    hintStyle: StyleText(
+                      size: 12,
+                      weight: AppFontWeights.regular,
+                      color: AppColors.mediumGrey,
+                    ),
+                  ),
+                  Gap(20),
+                  PoppinText(
+                    text: "Email Addres",
+                    styles: StyleText(
+                      size: 16,
+                      weight: AppFontWeights.medium,
+                      color: AppColors.darkTeal,
+                    ),
+                  ),
+                  Gap(10),
+                  MyFormField(
+                    controller: _emailController,
+                    hintText: "Email Addres",
+                    prefixIcon: Icon(
+                      Icons.email_outlined,
+                      color: AppColors.darkTeal,
+                    ),
+                    color: AppColors.white,
+                    hintStyle: StyleText(
+                      size: 12,
+                      weight: AppFontWeights.regular,
+                      color: AppColors.mediumGrey,
+                    ),
+                  ),
+                  Gap(20),
+                  PoppinText(
+                    text: "Password",
+                    styles: StyleText(
+                      size: 16,
+                      weight: AppFontWeights.medium,
+                      color: AppColors.darkTeal,
+                    ),
+                  ),
+                  Gap(10),
+                  MyFormField(
+                    controller: _passwordController,
+                    obscure: _isPasswordObscured,
+                    hintText: "Password",
+                    prefixIcon: Icon(
+                      Icons.key_outlined,
+                      color: AppColors.darkTeal,
+                    ),
+                    color: AppColors.white,
+                    hintStyle: StyleText(
+                      size: 12,
+                      weight: AppFontWeights.regular,
+                      color: AppColors.mediumGrey,
+                    ),
+                    errorText: _passwordError,
+                    showToggleIcon: true,
+                    onToggle: () {
+                      setState(() {
+                        _isPasswordObscured = !_isPasswordObscured;
+                      });
+                    },
+                  ),
+                  Gap(20),
+                  PoppinText(
+                    text: "Password Confirmation",
+                    styles: StyleText(
+                      size: 16,
+                      weight: AppFontWeights.medium,
+                      color: AppColors.darkTeal,
+                    ),
+                  ),
+                  Gap(10),
+                  MyFormField(
+                    controller: _passwordConfirmationController,
+                    obscure: _isPasswordObscured,
+                    hintText: "Password Confirmation",
+                    prefixIcon: Icon(
+                      Icons.key_outlined,
+                      color: AppColors.darkTeal,
+                    ),
+                    color: AppColors.white,
+                    hintStyle: StyleText(
+                      size: 12,
+                      weight: AppFontWeights.regular,
+                      color: AppColors.mediumGrey,
+                    ),
+                    errorText: _passwordError,
+                    showToggleIcon: true,
+                    onToggle: () {
+                      setState(() {
+                        _isPasswordObscured = !_isPasswordObscured;
+                      });
+                    },
+                  ),
+                  Gap(40),
+                  MyButton(
+                    onPressed: () {
+                      if (_nameController.text.isEmpty ||
+                          _emailController.text.isEmpty ||
+                          _passwordConfirmationController.text.isEmpty ||
+                          _passwordConfirmationController.text.isEmpty) {
+                        _showSnackBar(
+                          context,
+                          "Semua field harus diisi",
+                          error: true,
+                        );
+                        return;
+                      }
+                      if (_passwordController.text !=
+                          _passwordConfirmationController.text) {
+                        _showSnackBar(
+                          context,
+                          "Password tidak sama",
+                          error: true,
+                        );
+                        return;
+                      }
+                      final request = RegisterRequest(
+                        name: _nameController.text,
+                        email: _emailController.text,
+                        avatar: null, // Avatar opsional
+                        password: _passwordController.text,
+                        passwordConfirmation:
+                            _passwordConfirmationController.text,
                       );
-                      return;
-                    }
-                    if (_passwordController.text !=
-                        _passwordConfirmationController.text) {
-                      _showSnackBar(
-                        context,
-                        "Password tidak sama",
-                        error: true,
+                      context.read<AuthBloc>().add(
+                        RegisterEvent(request: request),
                       );
-                      return;
-                    }
-                    final request = RegisterRequest(
-                      name: _nameController.text,
-                      email: _emailController.text,
-                      avatar: null, // Avatar opsional
-                      password: _passwordController.text,
-                      passwordConfirmation:
-                          _passwordConfirmationController.text,
-                    );
-                    context.read<AuthBloc>().add(
-                      RegisterEvent(request: request),
-                    );
-                  },
-                  child: Text('Register'),
-                ),
-              ],
+                    },
+                    borderCircular: 28,
+                    vertical: 16,
+                    text: "Register",
+                    styleText: StyleText(
+                      size: 16,
+                      weight: AppFontWeights.semiBold,
+                      color: AppColors.white,
+                    ),
+                  ),
+                  Gap(26),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PoppinText(
+                        text: "Have a Account?",
+                        styles: StyleText(
+                          size: 14,
+                          weight: AppFontWeights.regular,
+                          color: AppColors.mediumGrey,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Navigasi ke halaman register
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => LoginPage()),
+                          );
+                        },
+                        child: PoppinText(
+                          text: "Sign In",
+                          styles: StyleText(
+                            size: 14,
+                            weight: AppFontWeights.extraBold,
+                            color: AppColors.darkCyan,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             );
           },
         ),
