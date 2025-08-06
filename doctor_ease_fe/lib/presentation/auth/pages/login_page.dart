@@ -45,12 +45,59 @@ class _LoginPageState extends State<LoginPage> {
     String message, {
     bool error = false,
   }) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: error ? Colors.red : Colors.green,
+    final overlay = Overlay.of(context);
+    final animationController = AnimationController(
+      vsync: Navigator.of(context),
+      duration: Duration(milliseconds: 300),
+    );
+    final animation =
+        Tween<Offset>(
+          begin: Offset(0, -1), // mulai di luar layar atas
+          end: Offset(0, 0), // turun ke posisi
+        ).animate(
+          CurvedAnimation(parent: animationController, curve: Curves.easeOut),
+        );
+
+    final entry = OverlayEntry(
+      builder: (context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: SlideTransition(
+              position: animation,
+              child: Material(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 66, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: error ? AppColors.linen : AppColors.mintCream,
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: AppColors.lightSlateGray,
+                      width: 1,
+                    ),
+                  ),
+                  child: PoppinText(
+                    text: message,
+                    styles: StyleText(
+                      size: 12,
+                      weight: AppFontWeights.bold,
+                      color: error ? AppColors.crimson : AppColors.ufoGreen,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
+    overlay.insert(entry);
+    animationController.forward();
+    Future.delayed(Duration(seconds: 2), () {
+      animationController.reverse().then((_) => entry.remove());
+    });
   }
 
   @override
@@ -120,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintStyle: StyleText(
                       size: 12,
                       weight: AppFontWeights.regular,
-                      color: AppColors.mediumGrey,
+                      color: AppColors.mediumGray,
                     ),
                   ),
                   Gap(26),
@@ -145,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintStyle: StyleText(
                       size: 12,
                       weight: AppFontWeights.regular,
-                      color: AppColors.mediumGrey,
+                      color: AppColors.mediumGray,
                     ),
                     errorText: _passwordError,
                     showToggleIcon: true,
@@ -169,12 +216,15 @@ class _LoginPageState extends State<LoginPage> {
                         setState(() {
                           _passwordError = "Password is incorrect!";
                         });
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (mounted) {
+                            setState(() {
+                              _passwordError = null; // Reset error
+                            });
+                          }
+                        });
                         return;
                       }
-
-                      setState(() {
-                        _passwordError = null; // Reset error
-                      });
                       context.read<AuthBloc>().add(
                         LoginEvent(request: request),
                       );
@@ -185,8 +235,9 @@ class _LoginPageState extends State<LoginPage> {
                     styleText: StyleText(
                       size: 16,
                       weight: AppFontWeights.semiBold,
-                      color: AppColors.white,
+                      color: const Color.fromRGBO(255, 255, 255, 1),
                     ),
+                    isLoading: state is AuthLoading,
                   ),
                   Gap(26),
                   Row(
@@ -197,7 +248,7 @@ class _LoginPageState extends State<LoginPage> {
                         styles: StyleText(
                           size: 14,
                           weight: AppFontWeights.regular,
-                          color: AppColors.mediumGrey,
+                          color: AppColors.mediumGray,
                         ),
                       ),
                       TextButton(

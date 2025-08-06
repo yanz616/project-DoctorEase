@@ -53,13 +53,59 @@ class _RegisterPageState extends State<RegisterPage> {
     String message, {
     bool error = false,
   }) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
+    final overlay = Overlay.of(context);
+    final animationController = AnimationController(
+      vsync: Navigator.of(context),
+      duration: Duration(milliseconds: 300),
+    );
+    final animation =
+        Tween<Offset>(
+          begin: Offset(0, -1), // mulai di luar layar atas
+          end: Offset(0, 0), // turun ke posisi
+        ).animate(
+          CurvedAnimation(parent: animationController, curve: Curves.easeOut),
+        );
 
-        backgroundColor: error ? Colors.red : Colors.green,
+    final entry = OverlayEntry(
+      builder: (context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: SlideTransition(
+              position: animation,
+              child: Material(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 66, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: error ? AppColors.linen : AppColors.mintCream,
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: AppColors.lightSlateGray,
+                      width: 1,
+                    ),
+                  ),
+                  child: PoppinText(
+                    text: message,
+                    styles: StyleText(
+                      size: 12,
+                      weight: AppFontWeights.bold,
+                      color: error ? AppColors.crimson : AppColors.ufoGreen,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
+    overlay.insert(entry);
+    animationController.forward();
+    Future.delayed(Duration(seconds: 2), () {
+      animationController.reverse().then((_) => entry.remove());
+    });
   }
 
   @override
@@ -116,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintStyle: StyleText(
                       size: 12,
                       weight: AppFontWeights.regular,
-                      color: AppColors.mediumGrey,
+                      color: AppColors.mediumGray,
                     ),
                   ),
                   Gap(20),
@@ -140,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintStyle: StyleText(
                       size: 12,
                       weight: AppFontWeights.regular,
-                      color: AppColors.mediumGrey,
+                      color: AppColors.mediumGray,
                     ),
                   ),
                   Gap(20),
@@ -165,7 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintStyle: StyleText(
                       size: 12,
                       weight: AppFontWeights.regular,
-                      color: AppColors.mediumGrey,
+                      color: AppColors.mediumGray,
                     ),
                     errorText: _passwordError,
                     showToggleIcon: true,
@@ -197,7 +243,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintStyle: StyleText(
                       size: 12,
                       weight: AppFontWeights.regular,
-                      color: AppColors.mediumGrey,
+                      color: AppColors.mediumGray,
                     ),
                     errorText: _passwordError,
                     showToggleIcon: true,
@@ -250,6 +296,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       weight: AppFontWeights.semiBold,
                       color: AppColors.white,
                     ),
+                    isLoading: state is AuthLoading,
                   ),
                   Gap(26),
                   Row(
@@ -260,7 +307,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         styles: StyleText(
                           size: 14,
                           weight: AppFontWeights.regular,
-                          color: AppColors.mediumGrey,
+                          color: AppColors.mediumGray,
                         ),
                       ),
                       TextButton(

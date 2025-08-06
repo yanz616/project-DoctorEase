@@ -8,5 +8,10 @@ class AppColors {
   static const darkCyan = Color(0xff1B4242);
   static const darkTeal = Color(0xff003C43);
   static const mutedRed = Color(0xffD55353);
-  static const mediumGrey = Color(0xff959894);
+  static const mediumGray = Color(0xff959894);
+  static const mintCream = Color(0xffEEFFEF);
+  static const linen = Color(0xffFAF0E6);
+  static const ufoGreen = Color(0xff45A943);
+  static const crimson = Color(0xffDC143C);
+  static const lightSlateGray = Color(0xffDAE3EB);
 }

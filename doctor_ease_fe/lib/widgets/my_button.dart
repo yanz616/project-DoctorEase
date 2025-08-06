@@ -10,6 +10,7 @@ class MyButton extends StatelessWidget {
     required this.vertical,
     required this.text,
     required this.styleText,
+    this.isLoading = false,
   });
 
   final VoidCallback onPressed;
@@ -17,11 +18,12 @@ class MyButton extends StatelessWidget {
   final double vertical;
   final String text;
   final StyleText styleText;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.darkCyan,
         shape: RoundedRectangleBorder(
@@ -30,13 +32,20 @@ class MyButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: vertical),
       ),
       child: Center(
-        child: PoppinText(
-          text: text,
-          styles: StyleText(
-            size: styleText.size,
-            weight: styleText.weight,
-            color: styleText.color,
-          ),
+        child: AnimatedSwitcher(
+          duration: Duration(seconds: 1),
+          transitionBuilder: (child, animation) =>
+              FadeTransition(opacity: animation, child: child),
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : PoppinText(
+                  text: text,
+                  styles: StyleText(
+                    size: styleText.size,
+                    weight: styleText.weight,
+                    color: styleText.color,
+                  ),
+                ),
         ),
       ),
     );
