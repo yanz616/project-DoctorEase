@@ -28,6 +28,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   late TextEditingController _passwordConfirmationController;
   bool _isPasswordObscured = true;
+  String? _nameError;
+  String? _emailError;
   String? _passwordError;
 
   @override
@@ -164,6 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       weight: AppFontWeights.regular,
                       color: AppColors.mediumGray,
                     ),
+                    errorText: _nameError,
                   ),
                   Gap(20),
                   PoppinText(
@@ -188,6 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       weight: AppFontWeights.regular,
                       color: AppColors.mediumGray,
                     ),
+                    errorText: _emailError,
                   ),
                   Gap(20),
                   PoppinText(
@@ -256,24 +260,79 @@ class _RegisterPageState extends State<RegisterPage> {
                   Gap(40),
                   MyButton(
                     onPressed: () {
-                      if (_nameController.text.isEmpty ||
-                          _emailController.text.isEmpty ||
-                          _passwordConfirmationController.text.isEmpty ||
+                      if (_nameController.text.isEmpty &&
+                          _emailController.text.isEmpty &&
+                          _passwordController.text.isEmpty &&
                           _passwordConfirmationController.text.isEmpty) {
-                        _showSnackBar(
-                          context,
-                          "Semua field harus diisi",
-                          error: true,
-                        );
+                        setState(() {
+                          _nameError = "All Forms Must be Filled In";
+                          _emailError = _nameError;
+                          _passwordError = _nameError;
+                        });
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (mounted) {
+                            setState(() {
+                              _passwordError = null;
+                              _emailError = null;
+                              _nameError = null;
+                            });
+                          }
+                        });
+                        return;
+                      }
+                      if (_nameController.text.isEmpty) {
+                        setState(() {
+                          _nameError = "Please Enter Your Name";
+                        });
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (mounted) {
+                            setState(() {
+                              _nameError = null;
+                            });
+                          }
+                        });
+                        return;
+                      }
+                      if (_emailController.text.isEmpty) {
+                        setState(() {
+                          _emailError = "Please Enter Your Email";
+                        });
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (mounted) {
+                            setState(() {
+                              _emailError = null;
+                            });
+                          }
+                        });
+                        return;
+                      }
+                      if (_passwordController.text.isEmpty &&
+                          _passwordConfirmationController.text.isEmpty) {
+                        setState(() {
+                          _passwordError =
+                              "Please Enter The Password and Confirmation";
+                        });
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (mounted) {
+                            setState(() {
+                              _passwordError = null;
+                            });
+                          }
+                        });
                         return;
                       }
                       if (_passwordController.text !=
                           _passwordConfirmationController.text) {
-                        _showSnackBar(
-                          context,
-                          "Password tidak sama",
-                          error: true,
-                        );
+                        setState(() {
+                          _passwordError = "Passwords are Not The Same";
+                        });
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (mounted) {
+                            setState(() {
+                              _passwordError = null;
+                            });
+                          }
+                        });
                         return;
                       }
                       final request = RegisterRequest(

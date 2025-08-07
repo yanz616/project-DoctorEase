@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
         // Memanggil seeder admin
         $this->call([
             AdminSeeder::class,
+            SpecializationSeeder::class,
+            DoctorSeeder::class,
         ]);
     }
 }

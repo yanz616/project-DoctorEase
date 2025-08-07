@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SpecializationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/doctors', [DoctorController::class, 'index']);//done
+    Route::get('/doctors/specialization/{id}', [DoctorController::class, 'getDoctorsBySpecialization']);//done
     Route::post('/appointments', [AppointmentController::class, 'store']);//done
     Route::put('/appointments/{id}', [AppointmentController::class, 'update']);//done
     Route::get('/appointments', [AppointmentController::class, 'index']);//id user -> done
@@ -34,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/profile', [AuthController::class, 'update']);//done
     Route::get('/me', [AuthController::class, 'me']);//done
     Route::post('/logout', [AuthController::class, 'logout']);//done
+    Route::get('/specialization', [SpecializationController::class, 'index']);//done
 });
 
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {

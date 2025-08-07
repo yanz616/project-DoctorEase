@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   bool _isPasswordObscured = true;
+  String? _emailError;
   String? _passwordError;
 
   @override
@@ -169,6 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                       weight: AppFontWeights.regular,
                       color: AppColors.mediumGray,
                     ),
+                    errorText: _emailError,
                   ),
                   Gap(26),
                   PoppinText(
@@ -212,6 +214,17 @@ class _LoginPageState extends State<LoginPage> {
                         email: _emailController.text,
                         password: _passwordController.text,
                       );
+                      if (_emailController.text.isEmpty) {
+                        setState(() {
+                          _emailError = "Please Enter Your Email";
+                        });
+                        Future.delayed(Duration(seconds: 2), () {
+                          setState(() {
+                            _emailError = null;
+                          });
+                        });
+                        return;
+                      }
                       if (_passwordController.text.length < 6) {
                         setState(() {
                           _passwordError = "Password is incorrect!";
