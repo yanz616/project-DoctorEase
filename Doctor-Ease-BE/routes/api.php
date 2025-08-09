@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/doctors', [DoctorController::class, 'index']);//done
+
+    //new
     Route::get('/doctors/specialization/{id}', [DoctorController::class, 'getDoctorsBySpecialization']);//done
     Route::post('/appointments', [AppointmentController::class, 'store']);//done
     Route::put('/appointments/{id}', [AppointmentController::class, 'update']);//done
@@ -36,7 +38,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/profile', [AuthController::class, 'update']);//done
     Route::get('/me', [AuthController::class, 'me']);//done
     Route::post('/logout', [AuthController::class, 'logout']);//done
+
+    //new
     Route::get('/specialization', [SpecializationController::class, 'index']);//done
+    Route::get('/specialization/{id}', [SpecializationController::class, 'show']);//done
 });
 
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
@@ -49,6 +54,13 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('/appointments/{id}', [AdminController::class, 'getAppointment']);//done
     Route::put('/appointments/{id}', [AdminController::class, 'updateAppointment']);//done
     Route::delete('/appointments/{id}', [AdminController::class, 'destroyAppointment']);//done
+
+    //new
+    Route::get('/specialization', [AdminController::class, 'specialization']);//done
+    Route::get('/specialization/{id}', [AdminController::class, 'getSpecialization']);//done
+    Route::post('/specialization', [AdminController::class, 'storeSpecialization']);//done
+    Route::put('/specialization/{id}', [AdminController::class, 'updateSpecialization']);//done
+    Route::delete('/specialization/{id}', [AdminController::class, 'destroySpecialization']);//done
     Route::get('/users', [AdminController::class, 'users']);//done
     Route::get('/users/{id}', [AdminController::class, 'getUser']);//done
 });

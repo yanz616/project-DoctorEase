@@ -9,8 +9,17 @@ use App\Models\Specialization;
 class SpecializationController extends Controller
 {
 
-    public function index() {
-        return Specialization::all();
+    public function index()
+    {
+        return response()->json(Specialization::all());
     }
+
+    public function show($id)
+    {
+        return response()->json(Specialization::findOrFail($id));
+    }
+
+    
+    
 
 }
