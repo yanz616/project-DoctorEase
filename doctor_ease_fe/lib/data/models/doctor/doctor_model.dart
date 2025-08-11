@@ -1,7 +1,9 @@
+import 'package:doctor_ease_fe/data/models/specialization/specialization_model.dart';
+
 class Doctor {
   final int id;
   final String name;
-  final String specialization;
+  final Specialization specialization;
   final String? photo;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -19,7 +21,9 @@ class Doctor {
     return Doctor(
       id: json['id'] as int,
       name: json['name'] as String,
-      specialization: json['specialization'] as String,
+      specialization: Specialization.fromJson(
+        json['specialization'] as Map<String, dynamic>,
+      ),
       photo: json['photo'] as String?,
       createdAt: json['created_at'] != null
           ? DateTime.parse(json['created_at'] as String)
@@ -34,10 +38,28 @@ class Doctor {
     return {
       'id': id,
       'name': name,
-      'specialization': specialization,
+      'specialization': specialization.toJson(),
       'photo': photo,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };
+  }
+}
+
+class DoctorSpecial {
+  final Specialization specialization;
+  final Doctor doctor;
+
+  DoctorSpecial({required this.doctor, required this.specialization});
+
+  factory DoctorSpecial.fromJson(Map<String, dynamic> json) {
+    return DoctorSpecial(
+      specialization: json['specialization'],
+      doctor: Doctor.fromJson(json['data']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'specialization': specialization, 'data': doctor.toJson()};
   }
 }

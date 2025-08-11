@@ -16,5 +16,16 @@ class DoctorBloc extends Bloc<DoctorEvent, DoctorState> {
         emit(DoctorErrorState(error: e.toString()));
       }
     });
+    on<LoadDoctorSpecial>((event, emit) async {
+      emit(DoctorLoadingState());
+      try {
+        final response = await doctorService.getDoctorBySpecialization(
+          event.id,
+        );
+        emit(DoctorSpecialLoadedState(response));
+      } catch (e) {
+        emit(DoctorErrorState(error: e.toString()));
+      }
+    });
   }
 }

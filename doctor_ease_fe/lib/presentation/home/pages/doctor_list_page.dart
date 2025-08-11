@@ -74,7 +74,7 @@ class _DoctorListPageState extends State<DoctorListPage> {
                           final doctor = state.doctors[index];
                           return ListTile(
                             title: Text(doctor.name),
-                            subtitle: Text(doctor.specialization),
+                            subtitle: Text(doctor.specialization.name),
                             trailing: const Icon(Icons.arrow_forward_ios),
                             onTap: () {
                               // 👇 Navigasi ke halaman detail doctor

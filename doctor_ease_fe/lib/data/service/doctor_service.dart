@@ -14,12 +14,27 @@ class DoctorService {
       Uri.parse('$baseUrl/doctors'),
       headers: {
         'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
+        'Content-Type': 'appliifcation/json',
       },
     );
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Doctor.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load doctors');
+    }
+  }
+
+  Future<DoctorSpecial> getDoctorBySpecialization(int id) async {
+    final token = await LocalStorage.getString();
+    if (token == null) throw Exception("Token Not Found");
+    final response = await http.get(
+      Uri.parse('$baseUrl/doctors/specialization/$id'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return DoctorSpecial.fromJson(data);
     } else {
       throw Exception('Failed to load doctors');
     }

@@ -12,6 +12,12 @@ class DoctorLoadedState extends DoctorState {
   DoctorLoadedState({required this.doctors});
 }
 
+class DoctorSpecialLoadedState extends DoctorState {
+  final DoctorSpecial response;
+
+  DoctorSpecialLoadedState(this.response);
+}
+
 class DoctorErrorState extends DoctorState {
   final String error;
 

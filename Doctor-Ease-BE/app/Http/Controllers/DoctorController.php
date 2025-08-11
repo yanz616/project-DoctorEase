@@ -21,7 +21,7 @@ class DoctorController extends Controller
 
         return response()->json([
             'specialization' => $doctors->name,
-            'doctors' => $doctors->doctors
+            'data' => $doctors->doctors
         ]);
     }
 

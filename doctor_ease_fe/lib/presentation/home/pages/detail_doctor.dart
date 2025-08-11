@@ -57,7 +57,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Spesialisasi: ${widget.doctor.specialization}",
+                  "Spesialisasi: ${widget.doctor.specialization.name}",
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 20),
