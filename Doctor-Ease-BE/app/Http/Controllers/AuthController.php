@@ -48,7 +48,7 @@ class AuthController extends Controller
             'token'=>$user->createToken('token')->plainTextToken,
             // 'is_admin'=> $user->is_admin,
             'user' => $user,
-        ],200);
+        ],201);
     }
 
     public function logout(Request $request)

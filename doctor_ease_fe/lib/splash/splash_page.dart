@@ -1,6 +1,6 @@
 import 'package:doctor_ease_fe/core/constants/colors.dart';
 import 'package:doctor_ease_fe/core/constants/font.dart';
-import 'package:doctor_ease_fe/presentation/auth/pages/login_page.dart';
+import 'package:doctor_ease_fe/presentation/views/auth/login_page.dart';
 import 'package:doctor_ease_fe/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
