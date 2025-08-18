@@ -13,17 +13,17 @@ class SpecializationSeeder extends Seeder
      */
     public function run(): void
     {
-        $specialization = [
-            'Dentist',
-            'Stroke',
-            'Heart Attack',
-            'Cardiologist'
+        $specializations = [
+            'Cardiology',
+            'Neurology',
+            'Dermatology',
+            'Pediatrics',
+            'Orthopedics',
+            'General Surgery'
         ];
 
-        foreach ($specialization as $name) {
-            Specialization::UpdateOrCreate(
-                ['name' => $name],
-            );
+        foreach ($specializations as $spec) {
+            Specialization::create(['name' => $spec]);
         }
     }
 }

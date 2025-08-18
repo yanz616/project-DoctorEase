@@ -27,21 +27,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);//done
+    Route::put('/profile', [AuthController::class, 'update']);//done
+    Route::get('/specialization', [SpecializationController::class, 'index']);//done
+    Route::get('/specialization/{id}', [SpecializationController::class, 'show']);//done
     Route::get('/doctors', [DoctorController::class, 'index']);//done
-
-    //new
-    Route::get('/doctors/specialization/{id}', [DoctorController::class, 'getDoctorsBySpecialization']);//done
+    Route::get('/doctors/{id}', [DoctorController::class, 'show']);//done
     Route::post('/appointments', [AppointmentController::class, 'store']);//done
     Route::put('/appointments/{id}', [AppointmentController::class, 'update']);//done
     Route::get('/appointments', [AppointmentController::class, 'index']);//id user -> done
     Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy']);//done
-    Route::put('/profile', [AuthController::class, 'update']);//done
-    Route::get('/me', [AuthController::class, 'me']);//done
     Route::post('/logout', [AuthController::class, 'logout']);//done
-
-    //new
-    Route::get('/specialization', [SpecializationController::class, 'index']);//done
-    Route::get('/specialization/{id}', [SpecializationController::class, 'show']);//done
 });
 
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
@@ -51,12 +47,10 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::put('/doctors/{id}', [AdminController::class, 'updateDoctor']);//done
     Route::delete('/doctors/{id}', [AdminController::class, 'destroyDoctor']);//done
     Route::get('/appointments', [AdminController::class, 'appointments']);//done
-    Route::get('/appointments/{id}', [AdminController::class, 'getAppointment']);//done
-    Route::put('/appointments/{id}', [AdminController::class, 'updateAppointment']);//done
-    Route::delete('/appointments/{id}', [AdminController::class, 'destroyAppointment']);//done
-
-    //new
-    Route::get('/specialization', [AdminController::class, 'specialization']);//done
+    Route::get('/appointment/{id}', [AdminController::class, 'getAppointment']);//done
+    Route::put('/appointment/{id}', [AdminController::class, 'updateAppointment']);//done
+    Route::delete('/appointment/{id}', [AdminController::class, 'destroyAppointment']);//done
+    Route::get('/specialization', [AdminController::class, 'specializations']);//done
     Route::get('/specialization/{id}', [AdminController::class, 'getSpecialization']);//done
     Route::post('/specialization', [AdminController::class, 'storeSpecialization']);//done
     Route::put('/specialization/{id}', [AdminController::class, 'updateSpecialization']);//done

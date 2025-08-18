@@ -10,19 +10,16 @@ class DoctorController extends Controller
 {
     public function index()
     {
+        // ambil semua doctor dengan spesialisasinya
         $doctors = Doctor::with('specialization')->get();
-
         return response()->json($doctors);
     }
 
-    public function getDoctorsBySpecialization($specializationId)
+    public function show($id)
     {
-        $doctors = Specialization::with('doctors')->findOrFail($specializationId);
-
-        return response()->json([
-            'specialization' => $doctors->name,
-            'data' => $doctors->doctors
-        ]);
+        // ambil 1 doctor by id dengan spesialisasinya
+        $doctor = Doctor::with('specialization')->findOrFail($id);
+        return response()->json($doctor);
     }
 
 }

@@ -14,13 +14,26 @@ class DoctorSeeder extends Seeder
      */
     public function run(): void
     {
-        $dentistId = Specialization::where('name', 'Dentist')->first()->id ?? null;
+        $doctors = [
+            [
+                'name'              => 'Dr. John Doe',
+                'specialization_id' => 1, // Cardiology
+                'photo'             => 'https://via.placeholder.com/150'
+            ],
+            [
+                'name'              => 'Dr. Sarah Smith',
+                'specialization_id' => 2, // Neurology
+                'photo'             => 'https://via.placeholder.com/150'
+            ],
+            [
+                'name'              => 'Dr. Michael Johnson',
+                'specialization_id' => 3, // Dermatology
+                'photo'             => 'https://via.placeholder.com/150'
+            ]
+        ];
 
-        Doctor::Create([
-            'name'=>'Dr. Linda',
-            'Specialization_id'=> $dentistId,
-            'description' => 'test aja dulu',
-            'photo' => 'https://i.pinimg.com/1200x/29/86/1e/29861ea3420bde3ce1dcea7051564c04.jpg'
-        ]);
+        foreach ($doctors as $doctor) {
+            Doctor::create($doctor);
+        }
     }
 }

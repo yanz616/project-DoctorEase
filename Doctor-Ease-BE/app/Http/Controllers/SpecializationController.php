@@ -16,10 +16,9 @@ class SpecializationController extends Controller
 
     public function show($id)
     {
-        return response()->json(Specialization::findOrFail($id));
+        // tampilkan spesialisasi dengan daftar dokternya
+        $specialization = Specialization::with('doctors')->findOrFail($id);
+        return response()->json($specialization);
     }
-
-    
-    
 
 }
