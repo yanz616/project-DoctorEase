@@ -13,7 +13,7 @@ class DoctorLoadedState extends DoctorState {
 }
 
 class DoctorSpecialLoadedState extends DoctorState {
-  final DoctorSpecial response;
+  final List<DoctorSpecial> response;
 
   DoctorSpecialLoadedState(this.response);
 }

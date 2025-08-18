@@ -67,6 +67,7 @@ class _DoctorListPageState extends State<DoctorListPage> {
                       },
                       child: const Text('Profile'),
                     ),
+
                     Expanded(
                       child: ListView.builder(
                         itemCount: state.doctors.length,

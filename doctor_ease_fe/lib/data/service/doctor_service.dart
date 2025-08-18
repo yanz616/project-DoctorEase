@@ -25,7 +25,7 @@ class DoctorService {
     }
   }
 
-  Future<DoctorSpecial> getDoctorBySpecialization(int id) async {
+  Future<List<DoctorSpecial>> getDoctorBySpecialization(int id) async {
     final token = await LocalStorage.getString();
     if (token == null) throw Exception("Token Not Found");
     final response = await http.get(
@@ -33,8 +33,8 @@ class DoctorService {
       headers: {'Authorization': 'Bearer $token'},
     );
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return DoctorSpecial.fromJson(data);
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => DoctorSpecial.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load doctors');
     }
