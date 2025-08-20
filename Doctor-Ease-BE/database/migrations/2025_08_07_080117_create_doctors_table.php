@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('specialization_id')->constrained()->onDelete('cascade');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->text('photo')->nullable();
             $table->timestamps();
         });

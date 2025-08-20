@@ -9,17 +9,17 @@ class LoadingAuthState extends AuthState {}
 class AuthSuccessState extends AuthState {
   AuthResponse response;
 
-  AuthSuccessState(this.response);
+  AuthSuccessState({required this.response});
 }
 
 class LogoutSuccessState extends AuthState {
   LogoutResponse response;
 
-  LogoutSuccessState(this.response);
+  LogoutSuccessState({required this.response});
 }
 
 class FailureAuthState extends AuthState {
   final String error;
 
-  FailureAuthState(this.error);
+  FailureAuthState({required this.error});
 }

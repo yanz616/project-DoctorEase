@@ -13,9 +13,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final response = await authRepository.login(event.request);
         await LocalStorage.setString(response.token);
-        emit(AuthSuccessState(response));
+        emit(AuthSuccessState(response: response));
       } catch (e) {
-        emit(FailureAuthState(e.toString()));
+        emit(FailureAuthState(error: e.toString()));
       }
     });
 
@@ -24,9 +24,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final response = await authRepository.register(event.request);
         await LocalStorage.setString(response.token);
-        emit(AuthSuccessState(response));
+        emit(AuthSuccessState(response: response));
       } catch (e) {
-        emit(FailureAuthState(e.toString()));
+        emit(FailureAuthState(error: e.toString()));
       }
     });
 
@@ -36,9 +36,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         Future.delayed(Duration(seconds: 2));
         final response = await authRepository.logout();
         await LocalStorage.removeString();
-        emit(LogoutSuccessState(response));
+        emit(LogoutSuccessState(response: response));
       } catch (e) {
-        emit(FailureAuthState(e.toString()));
+        emit(FailureAuthState(error: e.toString()));
       }
     });
   }

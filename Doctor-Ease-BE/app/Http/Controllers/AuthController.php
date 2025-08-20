@@ -84,13 +84,13 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Profile berhasil diperbarui.',
             'data' => $user
-        ],200);
+        ],201);
     }
 
 
     public function me(Request $request)
     {
-        return response()->json($request->user());
+        return response()->json($request->user(),200);
     }
 
 }
