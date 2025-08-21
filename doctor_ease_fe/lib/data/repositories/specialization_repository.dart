@@ -21,7 +21,7 @@ class SpecializationRepository {
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      print(data);
+      // print(data);
       return data.map((json) => Specialization.fromJson(json)).toList();
     } else {
       throw Exception('Specialization Not Found: ${response.statusCode}');

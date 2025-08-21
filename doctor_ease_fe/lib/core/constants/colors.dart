@@ -15,4 +15,7 @@ class AppColors {
   static const crimson = Color(0xffDC143C);
   static const lightSlateGray = Color(0xffDAE3EB);
   static const dimGray = Color(0xff636363);
+  static const whiteSmoke = Color(0xffF3F3F3);
+  static const lightGray = Color(0xffCDCCCD);
+  static const lightGrayishCyan = Color(0xffEAF3F2);
 }

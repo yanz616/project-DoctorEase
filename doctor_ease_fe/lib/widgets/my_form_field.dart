@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 class MyFormField extends StatelessWidget {
   const MyFormField({
     super.key,
-    required this.controller,
+    this.controller,
     this.obscure = false,
     required this.hintText,
     required this.prefixIcon,
@@ -18,7 +18,7 @@ class MyFormField extends StatelessWidget {
     this.onToggle,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool obscure;
   final String hintText;
   final Icon prefixIcon;
