@@ -5,6 +5,7 @@ import 'package:doctor_ease_fe/presentation/blocs/auth/auth_bloc.dart';
 import 'package:doctor_ease_fe/presentation/blocs/auth/auth_event.dart';
 import 'package:doctor_ease_fe/presentation/blocs/auth/auth_state.dart';
 import 'package:doctor_ease_fe/presentation/views/auth/register_page.dart';
+import 'package:doctor_ease_fe/presentation/views/home/home_page.dart';
 import 'package:doctor_ease_fe/widgets/my_button.dart';
 import 'package:doctor_ease_fe/widgets/my_form_field.dart';
 import 'package:doctor_ease_fe/widgets/my_text.dart';
@@ -238,6 +239,10 @@ class _LoginPageState extends State<LoginPage> {
                         return;
                       }
                       context.read<AuthBloc>().add(LoginEvent(request));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => HomePage()),
+                      );
                     },
                     borderCircular: 28,
                     vertical: 16,

@@ -12,17 +12,19 @@ class SpecializationRepository {
     final token = await LocalStorage.getString();
     if (token == null) throw Exception("Token Not Found");
     final response = await http.get(
-      Uri.parse("$baseUrl/specialization"),
+      Uri.parse('$baseUrl/specialization'),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
       },
     );
+
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
+      print(data);
       return data.map((json) => Specialization.fromJson(json)).toList();
     } else {
-      throw Exception('Specialization Not Found');
+      throw Exception('Specialization Not Found: ${response.statusCode}');
     }
   }
 }

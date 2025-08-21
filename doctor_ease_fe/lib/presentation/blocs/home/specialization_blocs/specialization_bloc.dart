@@ -14,6 +14,7 @@ class SpecializationBloc
         final data = await specializationRepository.specializations();
         emit(LoadedGetAllSpecializationState(response: data));
       } catch (e) {
+        // print("Error di Bloc Specialization: $e");
         emit(FailureSpecializationState(error: e.toString()));
       }
     });

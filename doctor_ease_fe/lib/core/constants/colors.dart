@@ -14,4 +14,5 @@ class AppColors {
   static const ufoGreen = Color(0xff45A943);
   static const crimson = Color(0xffDC143C);
   static const lightSlateGray = Color(0xffDAE3EB);
+  static const dimGray = Color(0xff636363);
 }

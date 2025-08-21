@@ -18,6 +18,7 @@ class AuthRepository {
 
     if (response.statusCode == 201) {
       final data = json.decode(response.body);
+      // print(data);
       return AuthResponse.fromJson(data);
     } else {
       throw Exception('Failed to Login');
