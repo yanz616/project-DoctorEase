@@ -11,7 +11,7 @@ class SpecializationController extends Controller
 
     public function index()
     {
-        return response()->json(Specialization::all(),201);
+        return response()->json(Specialization::all()   );
     }
 
     public function show($id)
