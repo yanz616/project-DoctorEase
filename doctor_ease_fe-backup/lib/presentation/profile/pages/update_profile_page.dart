@@ -7,7 +7,6 @@ import 'package:doctor_ease_fe/presentation/profile/blocs/profile_event.dart';
 import 'package:doctor_ease_fe/presentation/profile/blocs/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   final User user;
@@ -24,7 +23,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   late final TextEditingController _passwordCtrl;
   late final TextEditingController _passwordConfirmCtrl;
   File? _avatarFile;
-  final ImagePicker _picker = ImagePicker();
+  // final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -44,14 +43,14 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     super.dispose();
   }
 
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _avatarFile = File(pickedFile.path);
-      });
-    }
-  }
+  // Future<void> _pickImage() async {
+  //   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       _avatarFile = File(pickedFile.path);
+  //     });
+  //   }
+  // }
 
   void _submitUpdate() {
     final request = UpdateProfileRequest(
@@ -106,7 +105,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                       : null,
                 ),
                 TextButton.icon(
-                  onPressed: _pickImage,
+                  onPressed: () {},
                   icon: const Icon(Icons.image),
                   label: const Text("Pilih Foto"),
                 ),

@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsetsGeometry.only(top: 34, left: 26, bottom: 46),
+              padding: EdgeInsets.only(top: 34, left: 26, bottom: 46),
               child: Row(
                 children: [
                   Text('data'),
@@ -124,28 +124,24 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     } else {
-                      return Column(
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: state.response.length,
-                              itemBuilder: (context, index) {
-                                final specialization = state.response[index];
-                                return TextButton(
-                                  onPressed: () {},
-                                  child: PoppinText(
-                                    text: specialization.name,
-                                    styles: StyleText(
-                                      size: 10,
-                                      weight: AppFontWeights.semiBold,
-                                      color: AppColors.dimGray,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: state.response.length,
+                          itemBuilder: (context, index) {
+                            final specialization = state.response[index];
+                            return TextButton(
+                              onPressed: () {},
+                              child: PoppinText(
+                                text: specialization.name,
+                                styles: StyleText(
+                                  size: 10,
+                                  weight: AppFontWeights.semiBold,
+                                  color: AppColors.dimGray,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       );
                     }
                   } else if (state is FailureSpecializationState) {
